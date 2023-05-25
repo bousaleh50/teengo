@@ -1,0 +1,9 @@
+POST http://localhost:4000/register
+Content-Type:applocation/json
+{
+    "_id":3,
+    "first_name":"ahmed",
+    "last_name":"ali",
+    "email":"aliahmed@gmail.com",
+    "password":"123"
+}
