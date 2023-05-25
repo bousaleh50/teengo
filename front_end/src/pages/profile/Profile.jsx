@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import profile from "C:/xampp/htdocs/teengo/front_end/src/assets/pexels-mohamed-abdelghaffar-771742.jpg";
 
 function Profile() {
     const {id}=useParams();
