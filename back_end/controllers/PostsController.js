@@ -1,6 +1,7 @@
 
 const PostModel=require("../models/posts");
 const LikesModel=require("../models/likes");
+const SaveModel=require("../models/savedPosts");
 
 const afficherPosts=async (req,res)=>{
     //const posts=await PostModel.find({});
@@ -66,7 +67,32 @@ const getPostInfo=async(req,res)=>{
     }
 }
 
+const savePost=async (req,res)=>{
+  const {user_id,post_id}=req.params;
+  try{
+      //const {post_id}=req.params;
+      const savedPost=new SaveModel(req.params);
+      await savedPost.save().then(()=>res.status(200).json({message:"post saved",savedPost}))
+      .catch((e)=>res.status(400).json({message:"i dont know what's happened"})
+      )
+  }catch(e){
+      res.status(500).json({message:"server error"});
+  }  
+}
+
+const unSavedPost=async(req,res)=>{
+  const { user_id, post_id } = req.params;
+  try {
+      await SaveModel.deleteOne({ user_id, post_id });
+      res.status(200).json({message:"unsaved"});
+  } catch (e) {
+      res.status(500).json({ message: "server error" });
+  }
+}
+
 module.exports={
     afficherPosts,
-    getPostInfo
+    getPostInfo,
+    savePost,
+    unSavedPost
 }

@@ -1,7 +1,8 @@
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
+import BookmarkOutlinedIcon from '@mui/icons-material/BookmarkOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 import { useState , useEffect} from "react";
 import Comments from "../comments/Comments";
@@ -10,8 +11,8 @@ import axios from "axios";
 
 
 function Post({post,user}){
-    console.log("this is the user", user)
     const [liked,setLiked]=useState(false);
+    const [saved,setSaved]=useState(false)
     const [comments,setComments]=useState([]);
     const [limit,setLimit]=useState(3)
     const [nbLikes,setNbLikes]=useState(post.nb_likes);
@@ -73,7 +74,7 @@ function Post({post,user}){
 
     const handleLike=async (post_id)=>{
         if(!liked){
-            await axios.post(`http://localhost:4000/like/${post_id}/${user._id}`,options)
+            await axios.get(`http://localhost:4000/like/${post_id}/${user._id}`,options)
             .then((res)=>{
                 setNbLikes(nbLikes+1);
             }).catch(e=>console.log(e));
@@ -90,6 +91,30 @@ function Post({post,user}){
             .catch((e)=>console.log(e))
         }
         setLiked(!liked)
+    }
+
+
+    const handleSavePost=async ()=>{
+        const user=localStorage.getItem("user");
+        console.log(post._id);
+        if(!saved){
+            await axios.get(`http://localhost:4000/posts/save/${post._id}/${user._id}`,options)
+            .then((res)=>{
+                console.log(res.data);
+            }).catch(e=>console.log(e));
+        }else{
+            await axios.delete(`http://localhost:4000/posts/unsaved/${post._id}/${user._id}`,{
+                method:"DELETE",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }            
+            ).then((res)=>{
+                console.log(res.data);
+            })
+            .catch((e)=>console.log(e))
+        }
+        setSaved(!saved)
     }
 
 
@@ -133,7 +158,7 @@ function Post({post,user}){
                   {nbComments}
                 </div>
                 <div className="flex flex-col gap-3 items-center sm:flex-row">
-                  <ShareOutlinedIcon className="hover:text-blue-600 cursor-pointer"/>
+                  {saved?<BookmarkOutlinedIcon className="hover:text-blue-600 cursor-pointer"/>:<BookmarkBorderOutlinedIcon className="hover:text-blue-600 cursor-pointer" onClick={handleSavePost}/>}
                 </div>
             </div>
             <div className="flex justify-between -z-50 p-3 items-center">

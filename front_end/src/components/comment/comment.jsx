@@ -12,6 +12,7 @@ function Comment() {
                     <span>like</span>
                     <span>dislike</span>
                 </div>
+                
             </div>
         </>
     );
