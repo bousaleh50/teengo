@@ -41,14 +41,14 @@ function Post({post,user}){
             Headers:{"Contetn-Type":"application/json"}
             }).then((res)=>{
                 setLiked(res.data.liked);
+                setSaved(res.data.saved);
             }).catch(e=>console.log(e));
         }
         getPostInfo();
     },[]);
-    
 
     const showCommentsHelper=async ()=>{
-       await axios.get(`http://localhost:4000/show_comments/${post._id}/${limit}`,{
+       await axios.get(`http://localhost:4000/comments/show_comments/${post._id}/${limit}`,{
             method:"GET",
             Headers:{"Content-Type":"application/json"}
             })
@@ -95,38 +95,42 @@ function Post({post,user}){
 
 
     const handleSavePost=async ()=>{
-        const user=localStorage.getItem("user");
-        console.log(post._id);
+        const user=JSON.parse(localStorage.getItem("user"));
         if(!saved){
             await axios.get(`http://localhost:4000/posts/save/${post._id}/${user._id}`,options)
-            .then((res)=>{
-                console.log(res.data);
-            }).catch(e=>console.log(e));
+            .catch(e=>console.log(e));
         }else{
-            await axios.delete(`http://localhost:4000/posts/unsaved/${post._id}/${user._id}`,{
+            await axios.delete(`http://localhost:4000/posts/unsave/${post._id}/${user._id}`,{
                 method:"DELETE",
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }            
-            ).then((res)=>{
-                console.log(res.data);
-            })
+            )
             .catch((e)=>console.log(e))
         }
         setSaved(!saved)
     }
 
+    const handleDeleteComment=async (comment_id)=>{
+        axios.delete(`http://localhost:4000/comments/delete/${comment_id}`)
+       
+    }
+
 
     const handleSubmit=(e)=>{
         e.preventDefault();
-        setNbComments(nbComments+1);
-        setLimit(limit+1);
-        setComments([...comments,newComment])
-        axios.post("http://localhost:4000/create_comment",newComment,options)
-        .catch(e=>console.log(e));
-        setShowComments(true)
-        setNewComment({...newComment,content:""});
+        if(newComment==""){
+            alert("please type somehtong")
+        }else{
+            setNbComments(nbComments+1);
+            setLimit(limit+1);
+            setComments([...comments,newComment])
+            axios.post("http://localhost:4000/comments/create_comment",newComment,options)
+            .catch(e=>console.log(e));
+            setShowComments(true)
+            setNewComment({...newComment,content:""});
+        }
     }
     
     return(
@@ -158,7 +162,7 @@ function Post({post,user}){
                   {nbComments}
                 </div>
                 <div className="flex flex-col gap-3 items-center sm:flex-row">
-                  {saved?<BookmarkOutlinedIcon className="hover:text-blue-600 cursor-pointer"/>:<BookmarkBorderOutlinedIcon className="hover:text-blue-600 cursor-pointer" onClick={handleSavePost}/>}
+                  {saved?<BookmarkOutlinedIcon className="hover:text-blue-600 cursor-pointer" onClick={handleSavePost}/>:<BookmarkBorderOutlinedIcon className="hover:text-blue-600 cursor-pointer" onClick={handleSavePost}/>}
                 </div>
             </div>
             <div className="flex justify-between -z-50 p-3 items-center">
@@ -166,16 +170,17 @@ function Post({post,user}){
                 <form className="flex gap-5 items-center w-11/12" onSubmit={handleSubmit}>
                     <input type="text" className="rounded-md border w-full flex-1 p-3 z-50 outline-none" 
                         placeholder="write a comment" value={newComment.content} onChange={(e)=>setNewComment({...newComment,content:e.target.value})}/>
-                    <button className="bg-blue-500 text-white rounded-sm p-1 ml-auto">Send</button>
+                    <button className="bg-blue-500 text-white rounded-sm p-1 ml-auto" disabled={newComment.content==""?true:false} >Send</button>
                 </form>
             </div>
             {
-                comments.map((c,ind)=><Comments key={ind} post={post} displayComments={showComments} comment={c} />)
+                comments.map((c,ind)=><Comments key={ind} post={post} displayComments={showComments} comment={c} deleteComment={handleDeleteComment}/>)
             }
             {
                 showComments&&
                 <div className="w-full flex justify-center py-5">
-                 <button  className="text-blue-500 " onClick={()=>showMore()}>Show more</button>
+                 <button  className="text-blue-500 "
+                 onClick={()=>showMore()}>Show more</button>
                </div>
             }
         </div>

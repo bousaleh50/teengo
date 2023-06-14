@@ -59,8 +59,19 @@ const displayComments=async (req,res)=>{
   }
 }
 
+const deleteComment=async(req,res)=>{
+    try {
+       await CommentModel.findOneAndDelete({_id:req.params.id})
+       return res.status(200).json({message:"comment deleted"})
+    } catch (e) {
+        console.log(e)
+        return res.status(500).json({message:"server error"})
+    }
+}
+
 
 module.exports={
     createComment,
-    displayComments
+    displayComments,
+    deleteComment
 }

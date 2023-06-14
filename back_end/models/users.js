@@ -32,6 +32,10 @@ const userSchema=mongoose.Schema({
     following:{
         type:Array,
         default:[]
+    },
+    savedPosts:{
+        type:Array,
+        default:[]
     }
 },  {timestamps:true});
 

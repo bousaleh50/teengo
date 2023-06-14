@@ -34,7 +34,7 @@ app.use('/',registerRouter);
 app.use('/',loginRouter);
 app.use('/posts',postsRouter);
 app.use('/',likesRouter);
-app.use('/',commentsRouter)
+app.use('/comments',commentsRouter)
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
