@@ -6,9 +6,10 @@ import Home from "./pages/home/home";
 import Login from "./pages/login/Login"
 import SignUp from "./pages/signup/SignUp";
 import Profile from "./pages/profile/Profile";
-import { ContextProvider, useStateContext } from "./contexts/contextProvider";
-import axios from "axios"
 import CreatePost from "./components/post/CreatePost";
+import Settings from "./pages/settings/Settings";
+import { useStateContext } from "./contexts/ContextProvider";
+import SavedPosts from "./components/posts/SavedPosts";
 
 
 function App() {
@@ -50,6 +51,14 @@ function App() {
         },{
           path:"/createPost",
           element:<CreatePost/>
+        },
+        {
+          path:"/settings",
+          element:<Settings/>
+        },
+        {
+          path:"/savedPosts",
+          element:<SavedPosts/>
         }
       ]
     },
