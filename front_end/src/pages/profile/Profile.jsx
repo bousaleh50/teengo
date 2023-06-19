@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./profile.css";
 
 function Profile() {
     const {id}=useParams();
@@ -21,31 +22,25 @@ function Profile() {
         .catch(e=>console.log(e));
     },[])
     return (
-        <div className="flex flex-col">
-            <div className="">
-                <div className="">
-                    {//<img src={profile} alt="" />
-                    }
-                </div>
-                <div>
-                    <img src="" alt="" />
-                </div>
-            </div>
-            <div>
-                <span>{profileUser.first_name}</span>
-            </div>
-            <div>
-                <div>
-                    <span>5K</span>
-                    <span>Followers</span>
-                </div>
-                <div>
-                    <span>5k</span>
-                    <span>Following</span>
-                </div>
-            </div>
+        <div className='profile'>
+        {/*your sidebar*/}
+        <div className='profileRight'>
+          <div className="profileRightTop">
+              <div className="profileCover">
+                  <img className='profileCoverImg' src="../assets/cover.jpg" alt="" />
+                  <img className='profileUserImg' src="../assets/user.png" alt="" />
+              </div>
+              <div className="profileInfo">
+                  <h4 className='profileInfoName'><span>{profileUser.first_name}</span></h4>
+                  <span className='profileInfoDesc'>this place for my description!!</span>
+              </div>
+          </div>
+          <div className="profileRightBottom">
+              {/*Feed page*/}
+              {/*your rightbar*/}
+          </div>
         </div>
+      </div>
     );
 }
-
 export default Profile;
