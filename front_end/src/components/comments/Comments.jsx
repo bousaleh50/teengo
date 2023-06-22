@@ -36,4 +36,4 @@ function Comments({displayComments,post,comment,deleteComment}) {
     );
 }
 
-export default Comments;
+export default Comments;     
