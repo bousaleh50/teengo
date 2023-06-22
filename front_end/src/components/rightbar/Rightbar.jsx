@@ -31,11 +31,7 @@ function RightBar() {
                 <span className="text-gray-400 md:p-3">Follow Request</span>
                 <div className="">
                     {
-                        requests.lenght>0?requests.map((r,ind)=><FriendRequest key={ind} user={r.sender[0]} userPic={Youness}/>):<Stack sx={{margin:"20% auto auto auto"}}>
-                        <Alert variant="outlined" severity="info">
-                          You have no daved posts yet!
-                        </Alert>
-                      </Stack>
+                        requests.map((r,ind)=><FriendRequest key={ind} user={r.sender[0]} userPic={Youness}/>)
                     }
                 </div>
             </div>
