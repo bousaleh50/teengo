@@ -20,6 +20,7 @@ function NavBar({user}) {
             console.log(e);
         })
     },[]);
+
     return (
         <div className="flex justify-between items-center z-50  border-b sticky -top-2 bg-white ">
             <div className='flex items-center gap-8 p-5 w-full justify-evenly md:p-2 md:gap-8 md:justify-start'>
@@ -29,24 +30,25 @@ function NavBar({user}) {
                 {/*<HomeOutlinedIcon className="hover:text-blue-600 md:hidden"/>*/}
                 <div className='flex justify-center flex-1'>
                     <Stack spacing={2} sx={{ width: 300 }}>
-                    <Autocomplete
-                       className=''
-                        freeSolo
-                        id="free-solo-2-demo"
-                        disableClearable
-                        options={users.map((option) => option.first_name)}
-                        renderInput={(params) => (
-                        <TextField
-                            
-                            {...params}
-                            label="Search"
-                            InputProps={{
-                            ...params.InputProps,
-                            type: 'search',
-                            }}
+                        <Autocomplete
+                        className=''
+                            freeSolo
+                            id="free-solo-2-demo"
+                            disableClearable
+                            options={users.map((option) => option.first_name)}
+                            renderInput={(params) => (
+                            <TextField
+                                
+                                {...params}
+                                label="Search"
+                                InputProps={{
+                                ...params.InputProps,
+                                type: 'search',
+                                }}
+                            />
+                            )}
                         />
-                        )}
-                    />
+                      
                     </Stack>
                 </div>
             </div>

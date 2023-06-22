@@ -43,7 +43,8 @@ const displayComments=async (req,res)=>{
           $project: { 
                 "_id": 1, 
                 "content": 1, 
-                "username": {$concat:["$user.first_name"," ","$user.last_name"]}
+                "username": {$concat:["$user.first_name"," ","$user.last_name"]},
+                "user_id":"$user._id"
             } 
     }
     ]).limit(limit);
