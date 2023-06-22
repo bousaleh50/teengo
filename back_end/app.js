@@ -13,6 +13,7 @@ var loginRouter=require("./routes/login");
 var postsRouter=require("./routes/posts");
 var likesRouter=require("./routes/likes");
 var commentsRouter=require("./routes/comments");
+var profileRouter=require("./routes/profile")
 
 
 var app = express();
@@ -35,6 +36,7 @@ app.use('/',loginRouter);
 app.use('/posts',postsRouter);
 app.use('/',likesRouter);
 app.use('/comments',commentsRouter)
+app.use("/profile", profileRouter);
  
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

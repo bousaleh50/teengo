@@ -1,0 +1,3 @@
+[submodule "teengo"]
+	path = teengo
+	url = https://github.com/bousaleh50/teengo.git
