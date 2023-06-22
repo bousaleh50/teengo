@@ -123,10 +123,34 @@ const getSavedPosts=async(req,res)=>{
     }
 }
 
+// Controller to handle saving a post
+const createPost = async (req, res) => {
+  try {
+    const { content} = req.body;
+    const user_id=req.params.user_id;
+    //const { filename } = req.file; // Assuming you're using multer to handle file uploads
+    const post = new Posts({
+      content,
+      user_id,
+      //media: filename,
+    });
+
+    await post.save();
+
+    res.status(200).json({ message: "Post created successfully", post });
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: "An error occurred while creating the post" });
+  }
+};
+
+
 module.exports={
     afficherPosts,
     getPostInfo,
     savePost,
     unSavePost,
+    createPost,
     getSavedPosts
 }
