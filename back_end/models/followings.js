@@ -1,7 +1,7 @@
 const { Timestamp } = require("mongodb");
 const {default:mongoose}=require("mongoose");
 
-const FriendsSchema=new mongoose.Schema({
+const FollowingSchema=new mongoose.Schema({
     sender_id:{
         type:mongoose.Schema.Types.ObjectId,
         require:true
@@ -12,4 +12,4 @@ const FriendsSchema=new mongoose.Schema({
     }
 },{Timestamp:true});
 
-module.exports=mongoose.model("friends",FriendsSchema);
+module.exports=mongoose.model("followings",FollowingSchema);

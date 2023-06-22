@@ -113,8 +113,9 @@ function Post({post,user}){
     }
 
     const handleDeleteComment=async (comment_id)=>{
-        axios.delete(`http://localhost:4000/comments/delete/${comment_id}`)
-       
+        axios.delete(`http://localhost:4000/comments/delete/${comment_id}`);
+        setNbComments(nbComments-1)
+        handleshowComments();
     }
 
 
